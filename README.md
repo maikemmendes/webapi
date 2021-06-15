@@ -14,5 +14,12 @@ Projeto desenvolvido em Dot NET, com o objetivo de aperfeiçoar o conhecimento n
 - Instala o Visual Studio Code
   <https://code.visualstudio.com/>
 
+### Verificando instalação 
+
+- abra o Visual Studio Code
+- No terminal do Visual Studio Code rode o comando `donet --version`, para verificar se o DotNet foi instalado corretamente
+
+### Tecnologia Utilizada
+- [DotNet5](https://dotnet.microsoft.com/)
 
 
