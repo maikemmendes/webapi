@@ -26,6 +26,20 @@ Projeto desenvolvido em Dot NET, com o objetivo de aperfeiçoar o conhecimento n
 - Uma vês no local desejado, rode o comando `mkdir LocadoraDefilme` onde será criado a pasta para criar o projeto
 - Vá até a pasta criada, e assim clicando com o botão direito clique na Opção Abrir om o Visual Studio, assim o VSCode já inicializa no local correto onde será criado o projeto
 - No terminal do Visual Studio Code rode o comando `dotnet new WebApi`, onde já sera toda a estrutura inicial para um projeto web
+
+### Iniciando um projeto
+
+- No terminal execute o comando `dotnet run`
+- No navegador abra o <https://localhost:5001>, para visualizar a sua Api edite a url para **https://localhost:5001/swagger/index.html**
+- Para abrir o swagger automaticamente, apenas clicando no locahost:5001 
+    No Arquivo **Startup.cs**, localizar o método **Configure**, no `If` na linha `app.UseSwaggerUI(c => {c.SwaggerEndpoint("/swagger/v1/swagger.json", "web_api v1");`
+
+                    inserir a linha  `c.RoutePrefix = string.Empty;`
+             #### Ficará assim       
+                    `app.UseSwaggerUI(c => {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "web_api v1")
+                    c.RoutePrefix = string.Empty;
+                    });`
   
 
 ### Tecnologia Utilizada
