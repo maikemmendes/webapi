@@ -40,7 +40,7 @@ Projeto desenvolvido em Dot NET, com o objetivo de aperfeiçoar o conhecimento n
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "web_api v1")
                     c.RoutePrefix = string.Empty;
                     });`
-  
+  - No terminal execute o comando `dotnet run`
 
 ### Tecnologia Utilizada
 - [DotNet5](https://dotnet.microsoft.com/)
