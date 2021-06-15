@@ -1,7 +1,7 @@
 public class Filme{
 
     public Filme(string titulo){
-        Titulo = titulo;
+        Titulo = titulo; 
     
     }
 
@@ -11,5 +11,7 @@ public class Filme{
     public string Genero {get; set;}
     public long DiretorId {get; set;}
     public Diretor Diretor {get; set;}
+
+    
 
 }
