@@ -40,9 +40,8 @@ Projeto desenvolvido em Dot NET, com o objetivo de aperfeiçoar o conhecimento n
 - No navegador abra o <https://localhost:5001>, para visualizar a sua Api edite a url para **https://localhost:5001/swagger/index.html**
 - Para abrir o swagger automaticamente, apenas clicando no locahost:5001 
     No Arquivo **Startup.cs**, localizar o método **Configure**, no `If` na linha `app.UseSwaggerUI(c => {c.SwaggerEndpoint("/swagger/v1/swagger.json", "web_api v1");`
-
-                    inserir a linha  `c.RoutePrefix = string.Empty;`
-             #### Ficará assim       
+inserir a linha  `c.RoutePrefix = string.Empty;` 
+ Ficará dessa forma:                       
                     `app.UseSwaggerUI(c => {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "web_api v1")
                     c.RoutePrefix = string.Empty;
