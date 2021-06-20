@@ -23,7 +23,7 @@ namespace webapi.Controllers
             _logger = logger;
         }
 
-        [HttpPut]
+        [HttpDelete]
         public string Get()
         {
             return "Hello";
