@@ -6,9 +6,10 @@ public class Diretor
     public string Nome { get; set; }
     public ICollection<Filme> Filmes { get; set; }
 
-    public Diretor()
+    public Diretor(string nome)
     {
 
+        Nome = nome;
         Filmes = new List<Filme>();
 
     }

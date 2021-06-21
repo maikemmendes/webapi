@@ -25,7 +25,9 @@ namespace WebApi.FilmeController
         [HttpPost]
         public async Task<ActionResult<Filme>> Post([FromBody] Filme filme)
         {
+            var folme = await _context.Filmes.FirstOrDefaultAsync(filme => filme.Id == filme.DiretorId);
             _context.Filmes.Add(filme);
+            
             await _context.SaveChangesAsync();
             try
             {
