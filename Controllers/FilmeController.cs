@@ -25,13 +25,11 @@ namespace WebApi.FilmeController
         [HttpPost]
         public async Task<ActionResult<Filme>> Post([FromBody] Filme filme)
         {
-
             _context.Filmes.Add(filme);
-
-            var diretor = await _context.Diretores.FirstOrDefaultAsync(director => director.Id == filme.DiretorId);
+            await _context.SaveChangesAsync();
             try
             {
-                if (diretor == null)
+                if (filme == null)
                 {
                     return NotFound("Não foi encontrado o diretor com esse id");
                 }
