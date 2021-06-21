@@ -1,6 +1,10 @@
 public class Filme
 {
+    public Filme (string titulo)
+    {
+        Titulo = titulo;
 
+    }
 
     public long Id { get; set; }
     public string Titulo{ get; set; }
@@ -9,11 +13,7 @@ public class Filme
     public long DiretorId { get; set; }
     public Diretor Diretor { get; set; }
 
-    public Filme (string titulo)
-    {
-        Titulo = titulo;
 
-    }
 
 
 }

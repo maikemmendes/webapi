@@ -26,6 +26,7 @@ public class DiretorController : ControllerBase{
 
     [HttpPost]
     public async Task<ActionResult<Diretor>> Post([FromBody] Diretor diretor) {
+      
         _context.Diretores.Add(diretor);
         await _context.SaveChangesAsync();
 
