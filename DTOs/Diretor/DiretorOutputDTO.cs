@@ -1,8 +1,8 @@
-public class DiretorOutputDTO {
+public class DiretorOutputPostDTO {
     public long Id { get; set; }
     public string Nome { get; set; }
 
-    public DiretorOutputDTO(long id, string nome) {
+    public DiretorOutputPostDTO(long id, string nome) {
         Id = id;
         Nome = nome;
     }

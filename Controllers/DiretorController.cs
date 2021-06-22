@@ -29,23 +29,24 @@ public class DiretorController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<DiretorOutputDTO>> Post([FromBody] DiretorInputDTO diretorInputDto) {
-        var diretor = new Diretor(diretorInputDto.Nome);
+    public async Task<ActionResult<DiretorOutputPostDTO>> Post([FromBody] DiretorInputPostDTO diretorInputPostDto) {
+        var diretor = new Diretor(diretorInputPostDto.Nome);
         _context.Diretores.Add(diretor);
-        await _context.SaveChangesAsync();
-
-            
-        var diretorOutputDTO = new DiretorOutputDTO(diretor.Id,diretor.Nome);
+        await _context.SaveChangesAsync();    
+        var diretorOutputPostDTO = new DiretorOutputPostDTO(diretor.Id,diretor.Nome);
         return Ok(diretor);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Diretor>> Put(long id, [FromBody] Diretor diretor)
+    public async Task<ActionResult<DiretorOutputPostDTO>> Put(long id, [FromBody] DiretorInputPutDTO diretorInputPutDTO)
     {
+        var diretor = new Diretor (diretorInputPutDTO.Nome);
         diretor.Id = id;
         _context.Diretores.Update(diretor);
         await _context.SaveChangesAsync();
-        return Ok(diretor);
+        
+          var diretorOutputDto = new DiretorOutputPutDTO(diretor.Id, diretor.Nome);
+        return Ok(diretorOutputDto);
     }
 
     [HttpDelete("{id}")]
