@@ -1,5 +1,7 @@
 using System.Collections.Generic;
-public class Diretor
+using System.ComponentModel.DataAnnotations;
+
+public class Diretor : IValidatableObject
 {
 
     public long Id { get; set; }
@@ -12,5 +14,10 @@ public class Diretor
         Nome = nome;
         Filmes = new List<Filme>();
 
+    }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+          throw new System.NotImplementedException();
     }
 }
