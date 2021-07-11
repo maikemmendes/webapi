@@ -39,7 +39,7 @@ public class FilmeController : ControllerBase
         return Ok(outputDTO);
     }
     [HttpGet]
-    public async Task<List<FilmeOutputGetAllDto>> Get()
+    public async Task<ActionResult<List<FilmeOutputGetAllDto>>> Get()
     {
 
         var filmes = await _context.Filmes.ToListAsync();
@@ -63,10 +63,12 @@ public class FilmeController : ControllerBase
     public async Task<ActionResult<FilmeOutputGetByIdDto>> Get(long id)
     {
         var filme = await _context.Filmes.Include(filme => filme.Diretor).FirstOrDefaultAsync(filme => filme.Id == id);
+     
         if (filme == null)
         {
             throw new ArgumentNullException("Filme não encontrado!");
         }
+     
         var outputDTO = new FilmeOutputGetByIdDto(filme.Id, filme.Titulo, filme.Diretor.Nome);
         return Ok(outputDTO);
 
