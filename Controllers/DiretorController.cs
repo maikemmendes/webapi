@@ -17,6 +17,9 @@ public class DiretorController : ControllerBase
         _context = context;
     }
 
+    ///<summary>
+    /// Busca todos os diretores cadastrados
+    ///</summary> 
     [HttpGet]//Get ALL
     public async Task<ActionResult<List<DiretorOutputGetAllDto>>> Get()
     {
@@ -51,7 +54,9 @@ public class DiretorController : ControllerBase
 
     }
 
-
+      ///<summary>
+    /// Busca os diretores cadastrados através do <c>Id</c>
+    ///</summary> 
     //Get By id
     [HttpGet("{id}")]
     public async Task<ActionResult<DiretorOutputGetByIdDto>> Get(long id)
@@ -74,8 +79,24 @@ public class DiretorController : ControllerBase
             return Conflict(ex.Message);
         }
     }
-
+          /// <summary>
+    /// Cadastra um diretor
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     POST /diretor
+    ///     {
+    ///        "nome": "Steven Spielberg",
+    ///     }
+    ///
+    /// </remarks>
+    /// <param name="nome">Nome do diretor</param>
+    /// <returns>O diretor criado</returns>
+    /// <response code="200">Diretor foi criado com sucesso</response>
+    /// 
     [HttpPost]
+     
     public async Task<ActionResult<DiretorOutputPostDTO>> Post([FromBody] DiretorInputPostDTO diretorInputPostDto)
     {
         try
@@ -93,6 +114,7 @@ public class DiretorController : ControllerBase
             return Conflict(ex.Message);
         }
     }
+
 
     [HttpPut("{id}")]
     public async Task<ActionResult<DiretorOutputPostDTO>> Put(long id, [FromBody] DiretorInputPutDTO diretorInputPutDTO)
