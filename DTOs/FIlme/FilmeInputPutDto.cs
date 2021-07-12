@@ -19,7 +19,6 @@ public class FilmeInputPutDtoValidation : AbstractValidator<FilmeInputPutDto>
     public FilmeInputPutDtoValidation()
     {
         RuleFor (filme => filme.Titulo).NotNull().NotEmpty();
-        RuleFor (filme => filme.Ano).NotNull().NotEmpty();
         RuleFor (filme => filme.DiretorId).NotNull().NotEmpty();
     }
 }
