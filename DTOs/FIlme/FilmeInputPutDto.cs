@@ -1,4 +1,6 @@
 
+using FluentValidation;
+
 public class FilmeInputPutDto
 {
      public long Id { get; set; }
@@ -9,4 +11,16 @@ public class FilmeInputPutDto
         Titulo = titulo;
         DiretorId = diretorId;
     }
+
+    
+public class FilmeInputPutDtoValidation : AbstractValidator<FilmeInputPutDto>
+{
+    
+    public FilmeInputPutDtoValidation()
+    {
+        RuleFor (filme => filme.Titulo).NotNull().NotEmpty();
+        RuleFor (filme => filme.Ano).NotNull().NotEmpty();
+        RuleFor (filme => filme.DiretorId).NotNull().NotEmpty();
+    }
+}
 }

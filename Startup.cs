@@ -25,8 +25,10 @@ namespace webapi
         public void ConfigureServices(IServiceCollection services)
         {
 
-         services.AddControllers().AddFluentValidation(options => {
-                options.RegisterValidatorsFromAssemblyContaining<Startup>();});
+            services.AddControllers().AddFluentValidation(options =>
+            {
+                options.RegisterValidatorsFromAssemblyContaining<Startup>();
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -35,7 +37,7 @@ namespace webapi
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
-                
+
             });
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=loca_base.db"));
 
