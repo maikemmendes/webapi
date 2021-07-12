@@ -79,7 +79,8 @@ public class DiretorController : ControllerBase
             return Conflict(ex.Message);
         }
     }
-          /// <summary>
+    
+    /// <summary>
     /// Cadastra um diretor
     /// </summary>
     /// <remarks>
@@ -116,6 +117,23 @@ public class DiretorController : ControllerBase
     }
 
 
+    /// <summary>
+    /// Modifica diretor cadastrado
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     PUT /diretor
+    ///     {
+    ///        "Id":"1",     
+    ///        "nome": "Steven Spielberg"
+    ///     }
+    ///
+    /// </remarks>
+    /// <param name="nome">Nome do diretor</param>
+    /// <returns>O diretor criado foi editado com sucesso</returns>
+    /// <response code="200">Diretor foi editado com sucesso</response>
+    /// 
     [HttpPut("{id}")]
     public async Task<ActionResult<DiretorOutputPostDTO>> Put(long id, [FromBody] DiretorInputPutDTO diretorInputPutDTO)
     {
@@ -133,6 +151,22 @@ public class DiretorController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Deleta Diretor
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     Delete /diretor
+    ///     {
+    ///        "Id": "1",
+    ///     }
+    ///
+    /// </remarks>
+    /// <param id="id">Id di diretor</param>
+    /// <returns>O diretor foi excluído</returns>
+    /// <response code="200">Diretor foi excluído com sucesso</response>
+    /// 
     [HttpDelete("{id}")]
     public async Task<ActionResult<Diretor>> Delete(long id)
     {

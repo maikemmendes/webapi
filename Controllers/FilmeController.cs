@@ -18,7 +18,24 @@ public class FilmeController : ControllerBase
         _context = context;
     }
 
-
+    /// <summary>
+    /// Cadastra um filme
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     POST /Filme
+    ///     {
+    ///        "titulo":"Jurassic Park",
+    ///        "ano":"1994",
+    ///        "genero": "Ficção"
+    ///        "diretorId": "1",
+    ///     }
+    ///
+    /// </remarks>
+    /// <returns>O filme foi criado</returns>
+    /// <response code="200">Filme foi criado com sucesso</response>
+    /// 
     [HttpPost]
     public async Task<ActionResult<FilmeOutputPostDto>> Post([FromBody] FilmeInputPostDto inputDTO)
     {
@@ -38,6 +55,10 @@ public class FilmeController : ControllerBase
 
         return Ok(outputDTO);
     }
+
+    ///<summary>
+    /// Busca os filmes cadastrados 
+    ///</summary> 
     [HttpGet]
     public async Task<ActionResult<List<FilmeOutputGetAllDto>>> Get()
     {
@@ -58,7 +79,9 @@ public class FilmeController : ControllerBase
 
         return outputDTOList;
     }
-
+    ///<summary>
+    /// Busca os diretores cadastrados através do <c>Id</c>
+    ///</summary> 
     [HttpGet("{id}")]
     public async Task<ActionResult<FilmeOutputGetByIdDto>> Get(long id)
     {
