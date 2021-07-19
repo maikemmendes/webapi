@@ -11,10 +11,11 @@ public class DiretorController : ControllerBase
 {
 
     private readonly ApplicationDbContext _context;
-
-    public DiretorController(ApplicationDbContext context)
+    private readonly IDiretorService _diretorService;
+    public DiretorController(ApplicationDbContext context, IDiretorService diretorService)
     {
         _context = context;
+        _diretorService = diretorService;
     }
 
     ///<summary>
@@ -24,16 +25,8 @@ public class DiretorController : ControllerBase
     public async Task<ActionResult<List<DiretorOutputGetAllDto>>> Get()
     {
 
-        try
-        {
+        
             var diretores = await _context.Diretores.ToListAsync();
-
-            if (!diretores.Any())
-            {
-
-                return NotFound("Não existem diretores cadastrados");
-
-            }
 
             var outputDTOList = new List<DiretorOutputGetAllDto>();
 
@@ -45,14 +38,7 @@ public class DiretorController : ControllerBase
             return outputDTOList;
 
         }
-        catch (Exception ex)
-        {
 
-            return Conflict(ex.Message);
-        }
-
-
-    }
 
       ///<summary>
     /// Busca os diretores cadastrados através do <c>Id</c>
