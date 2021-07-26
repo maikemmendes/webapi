@@ -1,13 +1,12 @@
+using System;
 
-public class DiretorOutputGetByIdDto
-{
-    public long Id { get; set; }
+public class DiretorOutputGetByIdDTO {
+    public long Id { get; private set; }
+    public string Nome { get; private set; }
 
-    public string Nome { get; set; }
-    public DiretorOutputGetByIdDto(long id, string nome)
+    public DiretorOutputGetByIdDTO(long id, string nome)
     {
         Id = id;
         Nome = nome;
     }
-
 }
