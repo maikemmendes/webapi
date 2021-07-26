@@ -1,8 +1,14 @@
-public class FilmeOutputPostDTO {
-    public long Id { get; set; }
-    public string Titulo { get; set; }
-    public FilmeOutputPostDTO(long id, string titulo) {
-        Id = id;
-        Titulo = titulo;
+    public class FilmeOutputPostDto
+    {
+        public long Id {get; set;}
+        public string Nome {get; set;}
+
+        public FilmeOutputPostDto(long id, string nome){
+
+            Id = id;
+            Nome = nome;
+         }   
+
+
     }
-}
+

@@ -1,13 +1,20 @@
+
 using FluentValidation;
 
-public class DiretorInputPostDTO {
+public class DiretorInputPostDTO
+{
     public string Nome { get; set; }
+
 }
 
-public class DiretorInputPostDTOValidator : AbstractValidator<DiretorInputPostDTO> {
-  public DiretorInputPostDTOValidator() {
-    RuleFor(x => x.Nome)
-      .NotEmpty()
-      .WithMessage("O nome do diretor é obrigatorio");
-  }
+public class DiretorInputPostDTOValidator : AbstractValidator<DiretorInputPostDTO>
+{
+
+    public DiretorInputPostDTOValidator()
+    {
+        RuleFor(diretor => diretor.Nome).NotNull().NotEmpty();
+        RuleFor(diretor => diretor.Nome).Length(2, 150).WithMessage("Tamanho de {TotalLength} é inválido");
+
+    }
 }
+

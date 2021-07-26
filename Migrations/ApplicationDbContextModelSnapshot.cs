@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace hello_2.Migrations
+namespace webapi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -30,12 +30,18 @@ namespace hello_2.Migrations
 
             modelBuilder.Entity("Filme", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Ano")
+                        .HasColumnType("TEXT");
+
                     b.Property<long>("DiretorId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Genero")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Titulo")
                         .HasColumnType("TEXT");

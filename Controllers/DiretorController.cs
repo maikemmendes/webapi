@@ -1,74 +1,169 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
-[Route("[controller]")]
-public class DiretorController : ControllerBase {
+[Route("controller")]
+public class DiretorController : ControllerBase
+{
+
     private readonly ApplicationDbContext _context;
     private readonly IDiretorService _diretorService;
-
-    public DiretorController(ApplicationDbContext context, IDiretorService diretorService) {
+    public DiretorController(ApplicationDbContext context, IDiretorService diretorService)
+    {
         _context = context;
         _diretorService = diretorService;
     }
 
-    // GET api/diretores
-    [HttpGet]
-    public async Task<ActionResult<DiretorListOutputGetAllDTO>> Get(CancellationToken cancellationToken, int limit = 5, int page = 1) {
-        return await _diretorService.GetByPageAsync(limit, page, cancellationToken);
-    }
+    ///<summary>
+    /// Busca todos os diretores cadastrados
+    ///</summary> 
+    [HttpGet]//Get ALL
+    public async Task<ActionResult<List<DiretorOutputGetAllDto>>> Get()
+    {
 
-    // GET api/diretores/1
+        
+            var diretores = await _context.Diretores.ToListAsync();
+
+            var outputDTOList = new List<DiretorOutputGetAllDto>();
+
+            foreach (Diretor diretor in diretores)
+            {
+                outputDTOList.Add(new DiretorOutputGetAllDto(diretor.Id, diretor.Nome));
+            }
+
+            return outputDTOList;
+
+        }
+
+
+      ///<summary>
+    /// Busca os diretores cadastrados através do <c>Id</c>
+    ///</summary> 
+    //Get By id
     [HttpGet("{id}")]
-    public async Task<ActionResult<DiretorOutputGetByIdDTO>> Get(long id) {
-        var diretor = await _diretorService.GetById(id);
+    public async Task<ActionResult<DiretorOutputGetByIdDto>> Get(long id)
+    {
+        try
+        {
+            var diretor = await _context.Diretores.FirstOrDefaultAsync(diretor => diretor.Id == id);
 
-        var outputDto = new DiretorOutputGetByIdDTO(diretor.Id, diretor.Nome);
-        return Ok(outputDto);
+            if (diretor == null)
+            {
+                return NotFound("Diretor não encontrado");
+            }
+
+            var outputDto = new DiretorOutputGetByIdDto(diretor.Id, diretor.Nome);
+
+            return Ok(diretor);
+        }
+        catch (Exception ex)
+        {
+            return Conflict(ex.Message);
+        }
     }
-
+    
     /// <summary>
-    /// Cria um diretor
+    /// Cadastra um diretor
     /// </summary>
     /// <remarks>
     /// Sample request:
     ///
     ///     POST /diretor
     ///     {
-    ///        "nome": "Martin Scorsese"
+    ///        "nome": "Steven Spielberg",
     ///     }
     ///
     /// </remarks>
-    /// <param name="diretorInputDto">Nome do diretor</param>
+    /// <param name="nome">Nome do diretor</param>
     /// <returns>O diretor criado</returns>
     /// <response code="200">Diretor foi criado com sucesso</response>
+    /// 
     [HttpPost]
-    public async Task<ActionResult<DiretorOutputPostDTO>> Post([FromBody] DiretorInputPostDTO diretorInputDto) {
-        var diretor = await _diretorService.Cria(new Diretor(diretorInputDto.Nome));
+     
+    public async Task<ActionResult<DiretorOutputPostDTO>> Post([FromBody] DiretorInputPostDTO diretorInputPostDto)
+    {
+        try
+        {
+            var diretor = new Diretor(diretorInputPostDto.Nome);
+            _context.Diretores.Add(diretor);
 
-        var diretorOutputDto = new DiretorOutputPostDTO(diretor.Id, diretor.Nome);
-        return Ok(diretorOutputDto);
+
+            await _context.SaveChangesAsync();
+            var diretorOutputPostDTO = new DiretorOutputPostDTO(diretor.Id, diretor.Nome);
+            return Ok(diretor);
+        }
+        catch (Exception ex)
+        {
+            return Conflict(ex.Message);
+        }
     }
 
-    // PUT api/diretores/{id}
+
+    /// <summary>
+    /// Modifica diretor cadastrado
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     PUT /diretor
+    ///     {
+    ///        "Id":"1",     
+    ///        "nome": "Steven Spielberg"
+    ///     }
+    ///
+    /// </remarks>
+    /// <param name="nome">Nome do diretor</param>
+    /// <returns>O diretor criado foi editado com sucesso</returns>
+    /// <response code="200">Diretor foi editado com sucesso</response>
+    /// 
     [HttpPut("{id}")]
-    public async Task<ActionResult<DiretorOuputPutDTO>> Put(long id, [FromBody] DiretorInputPutDTO diretorInputDto) {
-        var diretor = await _diretorService.Atualiza(new Diretor(diretorInputDto.Nome), id);
+    public async Task<ActionResult<DiretorOutputPostDTO>> Put(long id, [FromBody] DiretorInputPutDTO diretorInputPutDTO)
+    {
+        try{
+        var diretor = new Diretor(diretorInputPutDTO.Nome);
+        diretor.Id = id;
+        _context.Diretores.Update(diretor);
+        await _context.SaveChangesAsync();
 
-        var diretorOutputDto = new DiretorOuputPutDTO(diretor.Id, diretor.Nome);
+        var diretorOutputDto = new DiretorOutputPutDTO(diretor.Id, diretor.Nome);
         return Ok(diretorOutputDto);
+        }catch (Exception ex)
+        {
+            return Conflict(ex.Message);
+        }
     }
 
-    // DELETE api/diretores/{id}
+    /// <summary>
+    /// Deleta Diretor
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     Delete /diretor
+    ///     {
+    ///        "Id": "1",
+    ///     }
+    ///
+    /// </remarks>
+    /// <param id="id">Id di diretor</param>
+    /// <returns>O diretor foi excluído</returns>
+    /// <response code="200">Diretor foi excluído com sucesso</response>
+    /// 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(long id) {
-        await _diretorService.Exclui(id);
-        return Ok();
+    public async Task<ActionResult<Diretor>> Delete(long id)
+    {
+        var diretor = await _context.Diretores.FirstOrDefaultAsync(diretor => diretor.Id == id);
+        diretor.Id = id;
+        _context.Remove(diretor);
+        await _context.SaveChangesAsync();
+        return Ok(diretor);
+
     }
+
+
+
 }

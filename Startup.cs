@@ -1,17 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using FluentValidation.AspNetCore;
-using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.IO;
 using System;
+using FluentValidation.AspNetCore;
 
-namespace hello_2
+namespace webapi
 {
     public class Startup
     {
@@ -33,26 +32,31 @@ namespace hello_2
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "hello_2", Version = "v1" });
-                
-                // Set the comments path for the Swagger JSON and UI.
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "webapi", Version = "v1" });
+
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
+
             });
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=myapp.db"));
-            services.AddScoped<IDiretorService, DiretorService>();
-            services.AddScoped<IFilmeService, FilmeService>();
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=loca_base.db"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "hello_2 v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "web_api v1");
+                    c.RoutePrefix = string.Empty;
+                });
             }
 
             app.UseHttpsRedirection();
@@ -62,7 +66,7 @@ namespace hello_2
             app.UseAuthorization();
 
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
